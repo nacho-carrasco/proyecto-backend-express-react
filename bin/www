@@ -38,7 +38,7 @@ async function iniciarAplicacion() {
 
   try {
     console.log('Aplicación: Iniciando conexión a la base de datos...');
-    await conectarBBDD(process.env.MONGODB_CONNECT_URI || `mongodb+srv://pablo:pablo1234@micluster0.2da9ncw.mongodb.net/miBBDD`);
+    await conectarBBDD(process.env.MONGODB_CONNECT_URI || `mongodb://[usuario]:[contraseña]@servidor:puerto/basedatos`);
     console.log('Aplicación: Base de datos conectada correctamente');
 
     console.log('Aplicación: Iniciando servidor...');
