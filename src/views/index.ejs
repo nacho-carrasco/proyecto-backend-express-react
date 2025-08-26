@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title><%= titulo %></title>
+  <%- include("components/head") %>
+</head>
+
+<body>
+  <%- include("components/menu") %>
+
+  <main>
+    <header>
+      <h1>¡Saludos desde el <%= titulo %>!</h1>
+    </header>
+
+
+    <p>
+
+      <%= numero %>
+    </p>
+
+    <p>
+
+      <%= parrafo %>
+    </p>
+
+    <p>
+
+      <%=numeros%>
+
+
+    </p>
+
+    <p>
+
+      <% for(let i = 0; i < productos.length; i++) {%>
+    <p><%= productos[i].nombre %></p>
+    <% } %>
+    </p>
+
+    <section class="panel-info">
+      <h3>Funciones por hacer:</h3>
+      <ul>
+      </ul>
+    </section>
+  </main>
+</body>
+
+</html>

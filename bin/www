@@ -1,0 +1,53 @@
+// importaciones módulos y librerías nativos
+import { createServer } from 'http';
+
+// importaciones módulos y librerías terceros
+import dotenv from 'dotenv';
+import createDebug from 'debug';
+
+// configuración
+import { normalizePort, onError, onListening } from './server-helpers.js';
+
+// importaciones de configuración de base de datos
+import { conectarBBDD } from './../src/config/db.config.js';
+
+// importación de la aplicación Express
+import app from '../app.js';
+
+// Configuración del debug
+const debug = createDebug('proyecto5:server');
+
+// Configura dotenv al inicio
+dotenv.config();
+
+// Obtiene el puerto desde las variables de entorno y lo configura en Express
+const port = normalizePort(process.env.PORT || '3001');
+
+// Configurar el puerto usando notación de corchetes (evita errores de TypeScript)
+app['set']('port', port);
+
+// Crea el servidor HTTP - forzamos el tipo para evitar errores de VS Code
+// @ts-ignore - Ignorar verificación de tipos para esta línea
+const server = createServer(app);
+
+iniciarAplicacion();
+
+// Función que inicia toda la aplicación (servidor + base de datos)
+async function iniciarAplicacion() {
+  console.log('Aplicación: Iniciando aplicación servidor...');
+
+  try {
+    console.log('Aplicación: Iniciando conexión a la base de datos...');
+    await conectarBBDD(process.env.MONGODB_CONNECT_URI || `mongodb+srv://pablo:pablo1234@micluster0.2da9ncw.mongodb.net/miBBDD`);
+    console.log('Aplicación: Base de datos conectada correctamente');
+
+    console.log('Aplicación: Iniciando servidor...');
+    server.listen(port);
+
+    server.on('error', (error) => onError(error, port));
+    server.on('listening', () => onListening(server, debug));
+  } catch (error) {
+    console.error('Error al iniciar la aplicación:', error);
+    process.exit(1); // Salida por error
+  }
+}
